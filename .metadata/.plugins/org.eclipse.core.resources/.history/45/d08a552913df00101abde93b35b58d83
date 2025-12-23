@@ -1,0 +1,5 @@
+package com.loanapp.common.enums;
+
+public class LoanStatus {
+
+}

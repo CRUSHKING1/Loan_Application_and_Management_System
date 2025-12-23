@@ -1,0 +1,38 @@
+package com.loanapp.kyc.controller;
+
+import com.loanapp.kyc.dto.KycRequestDto;
+import com.loanapp.kyc.dto.KycResponseDto;
+import com.loanapp.kyc.service.KycService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/kyc")
+public class KycController {
+
+    private final KycService kycService;
+
+    public KycController(KycService kycService) {
+        this.kycService = kycService;
+    }
+
+    @PostMapping("/{userId}")
+    public ResponseEntity<KycResponseDto> submitKyc(
+            @PathVariable Long userId,
+            @RequestBody KycRequestDto dto) {
+
+        return ResponseEntity.ok(kycService.submitKyc(userId, dto));
+    }
+
+    @PutMapping("/{userId}/approve")
+    public ResponseEntity<KycResponseDto> approveKyc(@PathVariable Long userId) {
+        return ResponseEntity.ok(kycService.approveKyc(userId));
+    }
+
+    @PutMapping("/{userId}/reject")
+    public ResponseEntity<KycResponseDto> rejectKyc(@PathVariable Long userId) {
+        return ResponseEntity.ok(kycService.rejectKyc(userId));
+    }
+}
+
+

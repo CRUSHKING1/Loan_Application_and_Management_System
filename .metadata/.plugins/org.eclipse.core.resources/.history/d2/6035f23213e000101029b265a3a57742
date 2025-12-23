@@ -1,0 +1,10 @@
+package com.loanapp.kyc.dto;
+
+public class KycRequestDto {
+
+    private String fullName;
+    private String panNumber;
+    private String aadhaarLast4;
+
+    // getters & setters
+}
