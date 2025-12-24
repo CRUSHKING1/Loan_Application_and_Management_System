@@ -1,0 +1,10 @@
+package com.loanapp.emi.service;
+
+public interface EmiService {
+
+    void generateEmiSchedule(Loan loan);
+
+    void payEmi(Long emiId);
+
+    List<EmiResponseDto> getLoanEmis(Long loanId);
+}

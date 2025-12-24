@@ -1,0 +1,30 @@
+package com.loanapp.creditscore.entity;
+
+import com.loanapp.common.audit.Auditable;
+import jakarta.persistence.*;
+
+@Entity
+@Table(
+    name = "credit_score",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "user_id"),
+        @UniqueConstraint(columnNames = "pan_number")
+    }
+)
+public class CreditScore extends Auditable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @Column(name = "pan_number", nullable = false, length = 10)
+    private String panNumber;
+
+    @Column(nullable = false)
+    private Integer score;
+
+    // getters and setters
+}

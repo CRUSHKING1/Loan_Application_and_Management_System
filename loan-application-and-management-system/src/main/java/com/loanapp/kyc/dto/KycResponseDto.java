@@ -5,6 +5,8 @@ import com.loanapp.common.enums.KycStatus;
 import lombok.Data;
 
 
+import lombok.Data;
+
 @Data
 public class KycResponseDto {
 
@@ -13,5 +15,8 @@ public class KycResponseDto {
     private String panNumber;
     private String aadhaarLast4;
     private KycStatus status;
+    private Double monthlyIncome;
+    private String employmentStatus;
+    private int age; // Age calculated dynamically from date of birth
 
 }

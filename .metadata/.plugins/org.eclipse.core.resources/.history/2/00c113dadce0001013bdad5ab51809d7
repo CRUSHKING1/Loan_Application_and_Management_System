@@ -1,0 +1,46 @@
+package com.loanapp.kyc.util;
+
+import org.springframework.stereotype.Component;
+import java.time.LocalDate;
+
+@Component
+public class KycMapper {
+
+    // Convert KycRequestDto to Kyc entity
+    public Kyc toEntity(KycRequestDto requestDto) {
+        Kyc kyc = new Kyc();
+        kyc.setFullName(requestDto.getFullName());
+        kyc.setPanNumber(requestDto.getPanNumber());
+        kyc.setAadhaarLast4(requestDto.getAadhaarLast4());
+        kyc.setMonthlyIncome(requestDto.getMonthlyIncome());
+
+        // Convert employmentStatus from String to enum
+        if (requestDto.getEmploymentStatus() != null) {
+            kyc.setEmploymentStatus(EmploymentStatus.valueOf(requestDto.getEmploymentStatus()));
+        }
+
+        // Convert dateOfBirth from String to LocalDate
+        if (requestDto.getDateOfBirth() != null) {
+            kyc.setDateOfBirth(LocalDate.parse(requestDto.getDateOfBirth())); // Assumes ISO format (yyyy-MM-dd)
+        }
+
+        return kyc;
+    }
+
+    // Convert Kyc entity to KycResponseDto
+    public KycResponseDto toResponseDto(Kyc kyc) {
+        KycResponseDto responseDto = new KycResponseDto();
+        responseDto.setUserId(kyc.getUserId());
+        responseDto.setFullName(kyc.getFullName());
+        responseDto.setPanNumber(kyc.getPanNumber());
+        responseDto.setAadhaarLast4(kyc.getAadhaarLast4());
+        responseDto.setStatus(kyc.getStatus());
+        responseDto.setMonthlyIncome(kyc.getMonthlyIncome());
+        responseDto.setEmploymentStatus(kyc.getEmploymentStatus().name());
+
+        // Calculate and set the age dynamically
+        responseDto.setAge(kyc.getAge());
+
+        return responseDto;
+    }
+}

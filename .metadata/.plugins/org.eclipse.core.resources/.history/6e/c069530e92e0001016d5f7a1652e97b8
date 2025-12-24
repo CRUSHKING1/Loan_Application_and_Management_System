@@ -1,0 +1,13 @@
+package com.loanapp.creditscore.service;
+
+import com.loanapp.creditscore.dto.CreditScoreResponseDto;
+
+public class CreditScoreServiceImpl implements CreditScoreService {
+
+	@Override
+	public CreditScoreResponseDto getOrCreateCreditScore(Long userId, String panNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

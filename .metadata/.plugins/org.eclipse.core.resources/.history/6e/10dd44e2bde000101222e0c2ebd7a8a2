@@ -1,0 +1,8 @@
+package com.loanapp.emi.repository;
+
+public interface EmiRepository extends JpaRepository<Emi, Long> {
+
+    List<Emi> findByLoanId(Long loanId);
+
+    long countByLoanIdAndStatus(Long loanId, EmiStatus status);
+}

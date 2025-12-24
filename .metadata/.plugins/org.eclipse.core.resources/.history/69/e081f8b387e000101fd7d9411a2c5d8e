@@ -1,0 +1,12 @@
+package com.loanapp.creditscore.dto;
+
+
+
+public class CreditScoreResponseDto {
+
+    private Long userId;
+    private String panNumber;
+    private Integer score;
+
+    // getters and setters
+}

@@ -5,50 +5,53 @@ import com.loanapp.kyc.dto.KycRequestDto;
 import com.loanapp.kyc.dto.KycResponseDto;
 import com.loanapp.kyc.entity.Kyc;
 import com.loanapp.kyc.repository.KycRepository;
-import com.loanapp.kyc.service.KycService;
-
-import java.util.List;
+import com.loanapp.kyc.util.KycMapper;  // Use KycMapper here
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class KycServiceImpl implements KycService {
 
     private final KycRepository kycRepository;
+    private final KycMapper kycMapper;
 
-    public KycServiceImpl(KycRepository kycRepository) {
+    public KycServiceImpl(KycRepository kycRepository, KycMapper kycMapper) {
         this.kycRepository = kycRepository;
+        this.kycMapper = kycMapper; // Inject the mapper
     }
 
     @Override
     public KycResponseDto submitKyc(Long userId, KycRequestDto dto) {
-
-        Kyc kyc = new Kyc();
+        Kyc kyc = kycMapper.toEntity(dto); // Use the mapper to convert DTO to entity
         kyc.setUserId(userId);
-        kyc.setFullName(dto.getFullName());
-        kyc.setPanNumber(dto.getPanNumber());
-        kyc.setAadhaarLast4(dto.getAadhaarLast4());
-        kyc.setStatus(KycStatus.PENDING);
+        kyc.setStatus(KycStatus.PENDING); // Set status to PENDING by default
+        kyc = kycRepository.save(kyc); // Save to the database
 
-        return mapToDto(kycRepository.save(kyc));
+        return kycMapper.toResponseDto(kyc); // Convert the entity to DTO and return
     }
 
     @Override
-    public KycResponseDto approveKyc(Long userId) {//admin
+    public KycResponseDto approveKyc(Long userId) {
         Kyc kyc = kycRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("KYC not found"));
 
         kyc.setStatus(KycStatus.APPROVED);
-        return mapToDto(kycRepository.save(kyc));
+        kyc = kycRepository.save(kyc); // Save the updated KYC
+
+        return kycMapper.toResponseDto(kyc); // Convert the entity to DTO and return
     }
 
     @Override
-    public KycResponseDto rejectKyc(Long userId) {//admin
+    public KycResponseDto rejectKyc(Long userId) {
         Kyc kyc = kycRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("KYC not found"));
 
         kyc.setStatus(KycStatus.REJECTED);
-        return mapToDto(kycRepository.save(kyc));
+        kyc = kycRepository.save(kyc); // Save the updated KYC
+
+        return kycMapper.toResponseDto(kyc); // Convert the entity to DTO and return
     }
 
     @Override
@@ -57,13 +60,12 @@ public class KycServiceImpl implements KycService {
                 .map(k -> k.getStatus() == KycStatus.APPROVED)
                 .orElse(false);
     }
-   
-    
+
     @Override
     public List<KycResponseDto> getPendingKycs() {
         return kycRepository.findByStatus(KycStatus.PENDING)
                 .stream()
-                .map(this::mapToDto)
+                .map(kycMapper::toResponseDto)
                 .toList();
     }
 
@@ -71,16 +73,6 @@ public class KycServiceImpl implements KycService {
     public KycResponseDto getKycByUserId(Long userId) {
         Kyc kyc = kycRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("KYC not found"));
-        return mapToDto(kyc);
-    }
-    
-    private KycResponseDto mapToDto(Kyc kyc) {
-        KycResponseDto dto = new KycResponseDto();
-        dto.setUserId(kyc.getUserId());
-        dto.setFullName(kyc.getFullName());
-        dto.setPanNumber(kyc.getPanNumber());
-        dto.setAadhaarLast4(kyc.getAadhaarLast4());
-        dto.setStatus(kyc.getStatus());
-        return dto;
+        return kycMapper.toResponseDto(kyc); // Use the mapper to convert entity to DTO
     }
 }

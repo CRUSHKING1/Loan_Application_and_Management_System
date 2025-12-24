@@ -1,0 +1,9 @@
+package com.loanapp.creditscore.service;
+
+public interface CreditScoreService {
+
+    CreditScoreResponseDto getOrCreateCreditScore(
+            Long userId,
+            String panNumber
+    );
+}

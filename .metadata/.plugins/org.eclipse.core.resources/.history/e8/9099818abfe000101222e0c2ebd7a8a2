@@ -1,0 +1,5 @@
+package com.loanapp.emi.exception;
+
+public class EmiException extends Exception {
+
+}

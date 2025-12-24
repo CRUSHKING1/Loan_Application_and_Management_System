@@ -1,0 +1,5 @@
+package com.loanapp.loan.controller;
+
+public class UserLoanController {
+
+}

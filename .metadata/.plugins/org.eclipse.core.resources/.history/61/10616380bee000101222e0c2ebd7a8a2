@@ -1,0 +1,7 @@
+package com.loanapp.emi.dto;
+
+
+@Getter @Setter
+public class EmiPaymentRequestDto {
+    private Long emiId;
+}
