@@ -1,0 +1,18 @@
+package com.loanapp.emi.dto;
+
+import java.math.BigDecimal;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Data
+public class EmiPayRequestDto {
+
+    private Long emiId;
+    private Long userId;
+    private BigDecimal amount;
+
+}

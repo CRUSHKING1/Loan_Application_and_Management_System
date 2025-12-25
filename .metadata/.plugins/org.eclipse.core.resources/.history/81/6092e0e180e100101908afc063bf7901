@@ -1,0 +1,8 @@
+package com.loanapp.loan.dto;
+
+@Getter @Setter
+public class LoanPreviewResponseDto {
+    private Double interestRate;
+    private Double emiAmount;
+    private Double totalPayable;
+}

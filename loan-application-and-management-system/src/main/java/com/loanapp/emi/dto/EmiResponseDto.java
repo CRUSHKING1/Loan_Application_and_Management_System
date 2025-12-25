@@ -5,15 +5,18 @@ import java.time.LocalDate;
 
 import com.loanapp.common.enums.EmiStatus;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter @Setter
+@Data
 public class EmiResponseDto {
+
     private Long emiId;
+    private Integer emiNumber;
     private BigDecimal emiAmount;
     private BigDecimal penaltyAmount;
     private BigDecimal totalPayable;
     private LocalDate dueDate;
     private EmiStatus status;
+
+   
 }

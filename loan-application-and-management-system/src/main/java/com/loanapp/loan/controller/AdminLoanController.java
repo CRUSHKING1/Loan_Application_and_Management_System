@@ -1,7 +1,5 @@
 package com.loanapp.loan.controller;
 
-
-
 import com.loanapp.common.enums.LoanStatus;
 import com.loanapp.loan.dto.LoanApprovalRequestDto;
 import com.loanapp.loan.dto.LoanResponseDto;
@@ -21,30 +19,31 @@ public class AdminLoanController {
         this.loanService = loanService;
     }
 
-    @GetMapping("/view-all")
-    public ResponseEntity<List<LoanResponseDto>> viewAllLoans() {
-        return ResponseEntity.ok(loanService.getAllLoans());
+    // Endpoint for admin to approve or reject a loan
+    @PostMapping("/{loanId}/approve-or-reject")
+    public ResponseEntity<LoanResponseDto> approveOrRejectLoan(@PathVariable Long loanId, @RequestBody LoanApprovalRequestDto request) {
+        LoanResponseDto loan = loanService.approveOrRejectLoan(loanId, request);
+        return ResponseEntity.ok(loan);
     }
 
-    @GetMapping("/view-approved")
-    public ResponseEntity<List<LoanResponseDto>> viewApprovedLoans() {
-        return ResponseEntity.ok(loanService.getLoansByStatus(LoanStatus.APPROVED));
-    }
-
+    // Endpoint for admin to activate a loan
     @PostMapping("/{loanId}/activate")
     public ResponseEntity<LoanResponseDto> activateLoan(@PathVariable Long loanId) {
-        return ResponseEntity.ok(loanService.activateLoan(loanId));
+        LoanResponseDto loan = loanService.activateLoan(loanId);
+        return ResponseEntity.ok(loan);
     }
 
-    @PostMapping("/{loanId}/reject")
-    public ResponseEntity<LoanResponseDto> rejectLoan(@PathVariable Long loanId,
-                                                      @RequestBody LoanApprovalRequestDto request) {
-        request.setApproved(false);
-        return ResponseEntity.ok(loanService.approveOrRejectLoan(loanId, request));
+    // Endpoint to view all loans for the admin
+    @GetMapping("/view")
+    public ResponseEntity<List<LoanResponseDto>> viewAllLoans() {
+        List<LoanResponseDto> loans = loanService.getAllLoans();
+        return ResponseEntity.ok(loans);
     }
 
-    @PostMapping("/{loanId}/close")
-    public ResponseEntity<LoanResponseDto> closeLoan(@PathVariable Long loanId) {
-        return ResponseEntity.ok(loanService.closeLoan(loanId));
+    // Endpoint for admin to view loans by status (e.g., active, closed, applied, etc.)
+    @GetMapping("/view/status")
+    public ResponseEntity<List<LoanResponseDto>> viewLoansByStatus(@RequestParam LoanStatus status) {
+        List<LoanResponseDto> loans = loanService.getLoansByStatus(status);
+        return ResponseEntity.ok(loans);
     }
 }

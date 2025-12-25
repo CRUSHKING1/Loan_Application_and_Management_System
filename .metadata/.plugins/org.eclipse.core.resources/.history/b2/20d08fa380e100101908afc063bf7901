@@ -1,0 +1,45 @@
+package com.loanapp.loan.entity;
+
+import com.loanapp.common.audit.Auditable;
+import com.loanapp.common.enums.LoanStatus;
+import com.loanapp.common.enums.LoanType;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "loan", uniqueConstraints = @UniqueConstraint(columnNames = {"userId", "loanType"})) // Example of composite unique constraint
+@Getter
+@Setter
+public class Loan extends Auditable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)  // Ensure userId cannot be null
+    private Long userId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)  // Ensure loanType is required
+    private LoanType loanType;
+
+    @Column(nullable = false)  // Ensure loanAmount cannot be null
+    private Double loanAmount;
+
+    private Integer tenureMonths;
+
+    private Double interestRate;
+
+    @Column(nullable = false)  // Ensure emiAmount cannot be null
+    private Double emiAmount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)  // Ensure status is required
+    private LoanStatus status;
+
+    @Column(nullable = false)  // Ensure loanDisbursedDate is required
+    private LocalDate loanDisbursedDate; // New field
+}

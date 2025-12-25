@@ -18,16 +18,16 @@ public class KycMapper {
         kyc.setPanNumber(requestDto.getPanNumber());
         kyc.setAadhaarLast4(requestDto.getAadhaarLast4());
         kyc.setMonthlyIncome(requestDto.getMonthlyIncome());
-
+        kyc.setDateOfBirth(requestDto.getDateOfBirth());
         // Convert employmentStatus from String to enum
         if (requestDto.getEmploymentStatus() != null) {
             kyc.setEmploymentStatus(EmploymentStatus.valueOf(requestDto.getEmploymentStatus()));
         }
-
-        // Convert dateOfBirth from String to LocalDate
-        if (requestDto.getDateOfBirth() != null) {
-            kyc.setDateOfBirth(LocalDate.parse(requestDto.getDateOfBirth())); // Assumes ISO format (yyyy-MM-dd)
-        }
+//       
+//        // Convert dateOfBirth from String to LocalDate
+//        if (requestDto.getDateOfBirth() != null) {
+//            kyc.setDateOfBirth(LocalDate.parse(requestDto.getDateOfBirth())); // Assumes ISO format (yyyy-MM-dd)
+//        }
 
         return kyc;
     }

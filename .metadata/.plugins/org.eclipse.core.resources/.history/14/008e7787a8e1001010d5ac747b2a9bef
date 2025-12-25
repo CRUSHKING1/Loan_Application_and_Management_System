@@ -1,0 +1,10 @@
+package com.loanapp.payment.repository;
+
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
+}
+
+
+public interface PaymentService {
+
+    void payEmi(Long emiId, Long userId, BigDecimal amount);
+}

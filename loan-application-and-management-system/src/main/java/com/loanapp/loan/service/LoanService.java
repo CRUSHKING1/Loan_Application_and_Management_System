@@ -1,29 +1,27 @@
 package com.loanapp.loan.service;
 
-
-
 import com.loanapp.common.enums.LoanStatus;
-import com.loanapp.loan.dto.LoanApplyRequestDto;
-import com.loanapp.loan.dto.LoanApprovalRequestDto;
-import com.loanapp.loan.dto.LoanResponseDto;
-
+import com.loanapp.loan.dto.*;
 import java.util.List;
 
 public interface LoanService {
 
-    LoanResponseDto applyLoan(Long userId, LoanApplyRequestDto request);
+    LoanResponseDto applyLoan(Long userId, LoanApplyRequestDto request); // For applying a loan
 
-    LoanResponseDto approveOrRejectLoan(Long loanId, LoanApprovalRequestDto request);
+    LoanPreviewResponseDto previewLoan(Long userId, LoanApplyRequestDto request); // For previewing the loan eligibility
 
-    LoanResponseDto activateLoan(Long loanId);
+    LoanResponseDto approveOrRejectLoan(Long loanId, LoanApprovalRequestDto request); // For admin to approve/reject
 
-    LoanResponseDto closeLoan(Long loanId);
+    LoanResponseDto activateLoan(Long loanId); // For admin to activate the loan
 
-    List<LoanResponseDto> getLoansByUser(Long userId);
+    LoanResponseDto closeLoan(Long loanId); // To close the loan
 
-    List<LoanResponseDto> getLoansByUserAndStatus(Long userId, LoanStatus status);
+    List<LoanResponseDto> getLoansByUser(Long userId); // View loans for a user
 
-    List<LoanResponseDto> getAllLoans();
+    List<LoanResponseDto> getLoansByUserAndStatus(Long userId, LoanStatus status); // Filter loans by user and status
 
-    List<LoanResponseDto> getLoansByStatus(LoanStatus status);
+    List<LoanResponseDto> getAllLoans(); // Admin view of all loans
+
+    List<LoanResponseDto> getLoansByStatus(LoanStatus status); // Filter loans by status (for admin view)
+
 }
