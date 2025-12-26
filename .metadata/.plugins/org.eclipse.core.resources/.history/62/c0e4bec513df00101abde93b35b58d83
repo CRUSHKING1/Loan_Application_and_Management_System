@@ -1,5 +1,0 @@
-package com.loanapp.common.exception;
-
-public class GlobalExceptionHandler {
-
-}

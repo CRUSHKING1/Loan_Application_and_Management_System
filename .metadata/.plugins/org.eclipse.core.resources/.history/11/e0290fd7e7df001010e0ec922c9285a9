@@ -1,8 +1,0 @@
-package com.loanapp.common.enums;
-
-public enum KycStatus {
-    NOT_APPLIED,
-    PENDING,
-    APPROVED,
-    REJECTED
-}

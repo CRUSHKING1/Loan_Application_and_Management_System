@@ -1,5 +1,0 @@
-package com.loanapp.user.dto;
-
-public class RegisterUserRequestDto {
-
-}

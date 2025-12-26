@@ -1,8 +1,0 @@
-package com.loanapp.payment.service;
-
-import java.math.BigDecimal;
-
-public interface PaymentService {
-
-	PaymentResponseDto payEmi(Long emiId, Long userId, BigDecimal amount);
-}

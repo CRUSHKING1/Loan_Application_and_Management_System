@@ -1,8 +1,0 @@
-package com.loanapp.payment.service;
-
-import com.loanapp.payment.repository.BigDecimal;
-
-public interface PaymentService {
-
-    void payEmi(Long emiId, Long userId, BigDecimal amount);
-}
